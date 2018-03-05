@@ -21,7 +21,9 @@ game = {
  	startGame: function (wrd) {
  		this.resetGuesses();
  		this.currentWord = new Word(this.wordDictionary[Math.floor(Math.random()* this.wordDictionary.length)]);
- 		this.currentWord.getLetter();
+         this.currentWord.getLetter();
+console.log('letters:');         
+console.log(this.currentWord.letters);         
  		this.promptUser();
  	},
 
@@ -31,11 +33,9 @@ game = {
 
  	promptUser: function(){
          var self = this;
-console.log(this.currentWord);         
  		prompt.get(['guessLet'], function(err, result){
  			console.log("You guessed: " + result.guessLet);
  			var manyGuessed = self.currentWord.checkLetter(result.guessLet);
-console.log('after check letter');
  			if(manyGuessed ==0) {
  				console.log("WRONG");
  				self.guessesRemaining--;
@@ -52,10 +52,11 @@ console.log('after check letter');
  			console.log("Guesses remaining: " + self.guessesRemaining);
  			console.log("-------------------");
  			if((self.guessesRemaining > 0) && (self.currentWord.found == false)){
- 				self.promptUser();
+                console.log(self.currentWord.wordRender());
+                self.promptUser();
  			}
  			else if(self.guessesRemaining ==0){
- 				console.log("Game over. Correct Word ", self.currentWord.target);
+ 				console.log("Game over. Correct Word ", self.currentWord.wordPicked);
  			} else {
  				console.log(self.currentWord.wordRender());
  			}
@@ -67,3 +68,4 @@ console.log('after check letter');
 };
 
 game.startGame();
+

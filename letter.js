@@ -4,12 +4,16 @@
 
 
 var letter = function(letterIn){
+    var outVal=""; 
 	this.character = letterIn;
 	this.isDisplayed = false;
 	this.letterRender = function(){
-		return !(this.isDisplayed) ? "_" : this.character;
+        if (this.isDisplayed) {outVal = this.character + ' '; }
+        else {outVal = "_ "; }
+		return outVal;
 	};
 };
 
 //export the constructor
 module.exports = letter;
+
