@@ -15,12 +15,16 @@ prompt.start();
 game = {
  	wordDictionary: ['gravitational', 'electrical', 'magnetic', 'nuclear'],
  	wordsCorrect: 0,
- 	guessesRemaining: 10,
+     guessesLeft: 10,
+     
  	currentWord: null,
  	
  	startGame: function (wrd) {
- 		this.resetGuesses();
- 		this.currentWord = new Word(this.wordDictionary[Math.floor(Math.random()* this.wordDictionary.length)]);
+         this.resetGuesses();
+         //don't need to add +1 because index is 0 to length
+         var pickFromDict = this.wordDictionary[Math.floor(Math.random()* this.wordDictionary.length)];
+         pickFromDict = pickFromDict.toUpperCase();
+ 		this.currentWord = new Word( pickFromDict );
          this.currentWord.getLetter();
 console.log('letters:');         
 console.log(this.currentWord.letters);         
@@ -28,35 +32,48 @@ console.log(this.currentWord.letters);
  	},
 
  	resetGuesses: function(){
- 		this.guessesRemaining = 10;
+ 		this.guessesLeft = 10;
  	},
 
- 	promptUser: function(){
-         var self = this;
- 		prompt.get(['guessLet'], function(err, result){
- 			console.log("You guessed: " + result.guessLet);
- 			var manyGuessed = self.currentWord.checkLetter(result.guessLet);
+
+    dispDashes: function() {
+        console.log("-------------------");
+    },
+
+    dispCorrectWord: function(rootObj ) {
+        //have to pass in the rootObj because all references of 'this' are gone
+        console.log( "Correct word was: " + rootObj.currentWord.wordPicked + "\n");
+    },
+
+    promptUser: function(){
+        var self = this;    //because in callback, 'this' will be different
+        var promptStr = 'your guess';  //used for prompt and recall 
+        console.log("\n");
+ 		prompt.get([promptStr], function(err, result){
+             var pressedLetter = result[promptStr].toUpperCase();
+ 			var manyGuessed = self.currentWord.checkLetter( pressedLetter );
  			if(manyGuessed ==0) {
- 				console.log("WRONG");
- 				self.guessesRemaining--;
- 				
+ 				console.log( pressedLetter + " is a BAD guess");
+ 			    self.guessesLeft--;
  			} else {
- 				console.log("CORRECT");
+ 				console.log(pressedLetter + " is a GOOD guess");
  					if(self.currentWord.findWord()){
- 						console.log("You won!");
- 						console.log("-------------------");
+                         console.log("You won !!!  \n");
+                         self.dispCorrectWord(self);
+                         self.dispDashes();
  						return;
  					}
- 			}
+ 			};
 
- 			console.log("Guesses remaining: " + self.guessesRemaining);
- 			console.log("-------------------");
- 			if((self.guessesRemaining > 0) && (self.currentWord.found == false)){
+             console.log("Guesses left: " + self.guessesLeft);
+             self.dispDashes();
+ 			if((self.guessesLeft > 0) && (self.currentWord.found == false)){
                 console.log(self.currentWord.wordRender());
                 self.promptUser();
  			}
- 			else if(self.guessesRemaining ==0){
- 				console.log("Game over. Correct Word ", self.currentWord.wordPicked);
+ 			else if(self.guessesLeft ==0){
+                 console.log("Game over.");
+                 self.dispCorrectWord(self);
  			} else {
  				console.log(self.currentWord.wordRender());
  			}
