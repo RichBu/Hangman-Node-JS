@@ -7,24 +7,21 @@
 var Word = require('./word.js');
 var prompt = require('prompt');
 
-console.log("Welcome to Chocolate Hangman!");
-console.log("Guess a letter of the name of a chocolate bar");
-console.log("Goodluck!");
-console.log("-----------------------------");
+console.log("Types of forces");
 prompt.start();
 
 
 
 game = {
- 	wordBank: ['hersheys', 'almondjoy', 'reeses', 'snickers', 'milkyway', 'kitkat', 'twix'],
- 	wordsWon: 0,
+ 	wordDictionary: ['gravitational', 'electrical', 'magnetic', 'nuclear'],
+ 	wordsCorrect: 0,
  	guessesRemaining: 10,
- 	currentWrd: null,
+ 	currentWord: null,
  	
  	startGame: function (wrd) {
  		this.resetGuesses();
- 		this.currentWrd = new Word(this.wordBank[Math.floor(Math.random()* this.wordBank.length)]);
- 		this.currentWrd.getLet();
+ 		this.currentWord = new Word(this.wordDictionary[Math.floor(Math.random()* this.wordDictionary.length)]);
+ 		this.currentWord.getLetter();
  		this.promptUser();
  	},
 
@@ -33,18 +30,19 @@ game = {
  	},
 
  	promptUser: function(){
- 		var self = this;
+         var self = this;
+console.log(this.currentWord);         
  		prompt.get(['guessLet'], function(err, result){
  			console.log("You guessed: " + result.guessLet);
- 			var manyGuessed = self.currentWrd.checkLetter(result.guessLet);
-
+ 			var manyGuessed = self.currentWord.checkLetter(result.guessLet);
+console.log('after check letter');
  			if(manyGuessed ==0) {
  				console.log("WRONG");
  				self.guessesRemaining--;
  				
  			} else {
  				console.log("CORRECT");
- 					if(self.currentWrd.findWord()){
+ 					if(self.currentWord.findWord()){
  						console.log("You won!");
  						console.log("-------------------");
  						return;
@@ -53,13 +51,13 @@ game = {
 
  			console.log("Guesses remaining: " + self.guessesRemaining);
  			console.log("-------------------");
- 			if((self.guessesRemaining > 0) && (self.currentWrd.found == false)){
+ 			if((self.guessesRemaining > 0) && (self.currentWord.found == false)){
  				self.promptUser();
  			}
  			else if(self.guessesRemaining ==0){
- 				console.log("Game over. Correct Word ", self.currentWrd.target);
+ 				console.log("Game over. Correct Word ", self.currentWord.target);
  			} else {
- 				console.log(self.currentWrd.wordRender());
+ 				console.log(self.currentWord.wordRender());
  			}
  		});
 
