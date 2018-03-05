@@ -1,0 +1,26 @@
+{
+  "name": "hangman-node-js",
+  "version": "1.0.0",
+  "description": "hangman in node js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RichBu/Hangman-Node-JS.git"
+  },
+  "keywords": [
+    "hangman",
+    "node"
+  ],
+  "author": "RPB",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RichBu/Hangman-Node-JS/issues"
+  },
+  "homepage": "https://github.com/RichBu/Hangman-Node-JS#readme",
+  "dependencies": {
+    "prompt": "^1.0.0"
+  }
+}
