@@ -28,7 +28,7 @@ game = {
         this.currentWord = new Word(pickFromDict);
         this.currentWord.getLetter();
 
-        console.log( "Welcome to Node.JS CLI program.");
+        console.log( "\nWelcome to Node.JS CLI program.");
         console.log( "by Rich Budek");
         console.log( "This is a simple program that does hangman");
         console.log( "on a server using Node.JS");
