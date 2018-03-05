@@ -29,8 +29,8 @@ function Word(wordPicked) {
             if (this.letters[i].character == guessLetter) {
                 this.letters[i].isDisplayed = true;
                 outVal++;
-            }
-        }
+            };
+        };
         return outVal;
     };
 
